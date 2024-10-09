@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 import com.bptn.course._02_board.Board;
 import com.bptn.course._02_player.Player;
-
+import com.bptn.course._02_board.Board;
+import com.bptn.course._02_player.Player;
 public class Game {
 
 
@@ -37,7 +38,7 @@ public class Game {
 	        players[1] = new Player(playerTwoName, "2");
 
 	        // Set up the board using the appropriate method
-	        board.initializeBoard(); // Assumes this method exists in the Board class
+	        board.boardSetUp(); // Assumes this method exists in the Board class
 	        // Print the board using the appropriate method
 	        board.printBoard(); // Assumes this method exists in the Board class
 	    }
@@ -47,14 +48,17 @@ public class Game {
 	    }
 
 	    public void playerTurn(Player currentPlayer) {
-	        int col = currentPlayer.makeMove(); // Assumes this method exists in the Player class
-	        while (!board.addToken(col, currentPlayer.getPlayerNumber())) { // Assumes this method exists in the Board class
-	            System.out.println("Invalid move. Try again."); // Prompt if the move is invalid
-	            col = currentPlayer.makeMove(); // Prompt for a new move
-	        }
-	        // Print the board after a successful move
-	        board.printBoard();
-	    }
+	        int col;
+	        do {
+	        	 col = currentPlayer.makeMove(board.getColumns()) -1; // Pass the number of columns
+	             if (col < 0 || col >= board.getColumns()) {
+	                 System.out.println("Invalid column. Please enter a column between 0 and " + (board.getColumns() - 1));
+	             }
+	         } while (!board.addToken(col, currentPlayer.getPlayerNumber())); // Check if the move is valid
+
+	         // Print the board after a successful move
+	         board.printBoard();
+	     }
 
 	    public void play() {
 	        boolean noWinner = true;
@@ -62,7 +66,7 @@ public class Game {
 	        int currentPlayerIndex = 0;
 
 	        while (noWinner) {
-	            if (board.isFull()) { // Check if the board is full
+	            if (board.boardFull()) { // Check if the board is full
 	                System.out.println("Board is now full. Game Ends.");
 	                return;
 	            }

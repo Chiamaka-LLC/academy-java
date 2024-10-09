@@ -8,13 +8,14 @@ public class Player {
 		//Instance variables
 		private String name;
 		private int playerNumber;
-
-		Player(){
-		}
-		public Player(String name, int playerNumber) {
+		private static Scanner scan = new Scanner(System.in); // Use static scanner to avoid multiple instances
+		
+		// Constructor
+		public Player(String name, String playerNumber) {
 		this.name = name;
-		this.playerNumber = playerNumber;
+		this.playerNumber = Integer.parseInt(playerNumber);
 
+			
 		}
 		public String getName() {
 		return name;
@@ -24,14 +25,13 @@ public class Player {
 		return playerNumber;
 		}
 
-		public int makeMove(int m) {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Slect a column for your token");
+		public int makeMove(int columns) {
+		
 		int column;
 		
 		// Loop until a valid column is entered (assuming m is the number of columns.)
 	    while (true) {
-	        System.out.println(name + " (Player " + playerNumber + "), enter the column number where you want to drop your token (1-" + m + ")");
+	        System.out.println(name + " (Player " + playerNumber + "), enter the column number where you want to drop your token (1-" + columns + ")");
 	        column = scan.nextInt();
 
 	        // Validate if the input is within the valid range (1 to m)
@@ -47,15 +47,7 @@ public class Player {
 	    @Override
 	    public String toString() {
 	        return "Player " + playerNumber + " is " + name;
-	    }
-	    public static void main(String[] args) {
-	        // Create a player object
-	        Player player1 = new Player("Bayo", 1);
-	        
-	     // Assume 7 columns (for example)
-	        int m = 7;
-	        int chosenColumn = player1.makeMove(m);  // Prompt the player to make a move
-	        
-	        System.out.println("Player chose column: " + chosenColumn);
-	    }
+	 
+		
+		}
 	}
